@@ -1,0 +1,5 @@
+# Comon Varibles for all hosts n the inventory
+
+user: tesla
+group: electric
+pass: 12345

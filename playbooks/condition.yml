@@ -1,0 +1,11 @@
+---
+- hosts: webservers
+  become: yes
+  tasks:
+    - name: Install Apache on Centos
+      yum: name=httpd state=present
+      when: ansible_os_family == "RedHat"
+
+    - name: Install Apache on Ubuntu
+      yum: name=apache2 state=present
+      when: ansible_os_family == "Debian"

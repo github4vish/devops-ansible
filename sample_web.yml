@@ -1,0 +1,47 @@
+---
+- hosts: webservers
+  sudo: yes
+  vars:
+    http_port: 80
+    doc_root: /var/www/html/ansible/
+    max_clients: 5
+    ansible_python_interpretor: python
+
+  vars_prompt:
+    - name: username
+      prompt: What is your name?
+
+  tasks:
+    - name: Ensure libselinux-python installed
+      yum: name=libselinux-python state=present
+
+    - name: Ensure Apache installed
+      yum: name=httpd state=present
+      when: ansible_os_family == "RedHat"
+
+    - name: Creates directory
+      file: path=/var/www/html/ansible state=directory
+
+    - name: Ensure Apache installed
+      yum: name=httpd state=present
+      when: ansible_os_family == "Red Hat"
+
+
+    - name: Deploy configuration File
+      template: src=templates/httpd.j2 dest=/etc/httpd/conf/httpd.conf
+      notify:
+        - Restart Apache
+
+
+    - name: Copy Site Files
+      template: src=templates/index.j2 dest{{doc_root}}/index.html mode=0644
+      notify:
+        - Restart Apache
+
+
+   - name: Stop IPTABLES Now!!
+     service: name=iptables state=stopped
+
+   handlers:
+     - name: Restart Apache
+       service: name=httpd state=restarted

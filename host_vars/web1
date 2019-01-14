@@ -1,0 +1,5 @@
+# Varibles exposed for the host named web1 from inventory file
+
+user: edison
+group: electric
+pass: 12345

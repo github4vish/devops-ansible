@@ -1,0 +1,24 @@
+---
+# tasks file for apache
+- name: Ensure Apache installed
+  yum: name=httpd state=present
+
+- name: Creates directory
+  file: path=/var/www/html/ansible state=directory
+
+- name: Ensure libselinux-python installed
+  yum: name=libselinux-python state=pesent
+
+- name: Ensure Apache is running
+  service: name=httpd enabled=yes state=started
+
+- name: Deploy configuration File
+  template: src=templates/httpd.j2 dest=/etc/httpd/conf/httpd.conf
+  notify:
+    - Restart Apache
+
+- name: Copy Site Files
+  template: src=templates/index.j2 dest={{doc_root}}/index.html mode=0644
+
+- name: Stop IPTABLES Now!
+  service: name=iptables state=stopped 

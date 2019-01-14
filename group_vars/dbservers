@@ -1,0 +1,5 @@
+# Variables exposed for the group named dbservers from the inventory
+dbname: devops
+dbuser: mint
+dbpass: 12345
+

@@ -1,0 +1,51 @@
+---
+#playbook exection
+ansible-playbook web_db.yaml
+
+#access goupvariable db1 
+ansible -m user -a "name={{user}} password={{pass}}" --sudo db1
+
+
+#acces host_vars web1
+ansible  -m user -a "name={{user}} password={{pass}}" -- sudo web1
+
+#including playbooks 
+cat site.yml
+
+#Store output of acommand
+out.yml
+
+#handler
+handler.yml  is executed only
+if it is the task is success true in which it is notifed “Apache Restart” 
+
+#condition
+ansible -m setup web1 | grep ansible_os_family
+      "ansible_os_family": "Debian",
+#templates
+jinja2 templates in templatesfolder and web.yml
+
+#A sample playbook with variables, templates, conditions and handlers.
+outside the templates file sample-web.yml
+
+#roles and executing
+webservers.yml
+roles are called by its names
+
+ansible-playbook webservers.yml
+
+#overriding varibles in role
+- hosts: weservers
+  sudo: yes
+  gather_facts: no
+  roles:
+    - {role:apache, http_port:8090, max_clients:250}
+
+#download ansible-galaxy role
+sudo ansible-galaxy install bennjoy.mysql
+
+
+#executing playbook with encrypted variable ansible-vault [pass:vault]
+ansible-playbook tomcat.yml --ask-vault-pass
+
+

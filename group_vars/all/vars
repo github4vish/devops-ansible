@@ -1,0 +1,3 @@
+---
+tomcatuser: tomcat
+tomcatpass: "{{vault_tomcat_pass}}"

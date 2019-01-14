@@ -1,0 +1,40 @@
+---
+- hosts: webeservers
+  become: yes
+  tasks:
+  - name: Ensure Apache installed
+    yum: name=httpd state=present
+
+  - name: Create directory
+    file: path=/var/ww/html/ansible state=directory
+
+  - name: Ensure Apache is running
+    service: name=httpd enabled=yes state=stated
+
+  - name: allow port 80/http access from anywhere
+    iptables:
+      action: insert
+      chain: INPT
+      protocol: tcp
+      destination-port:80
+      state: present
+      source: 0.0.0.0/0
+      jump: ACCEPT
+
+  - hosts: dbservers
+    become: yes
+    tasks:
+      - name: Ensre mysql server installed
+        yum: name=mysql-server state=present
+
+      - name: Ensre MySQL-python is installed
+        yum: name=MySQL-python state=present
+
+      - name: Create Database
+        mysql_db: name=devops state=present
+
+      - name: Create Database
+        mysql_db: name=devops state=present
+
+      - name: Create named mint
+        mysql_ser: name=mint password=12345 priv='*.*:ALL' state=present

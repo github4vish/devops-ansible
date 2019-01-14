@@ -1,0 +1,10 @@
+---
+- hosts: webservers
+  sudo: yes
+  vars:
+    username: GreenApple
+    doc_root: /var/www/html/
+
+  tasks:
+    - name: Copy Site Files
+      template: src=template/index.j2 dest={{doc_root}}/index.html
